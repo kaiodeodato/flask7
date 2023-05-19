@@ -8,8 +8,7 @@ def home():
     return render_template("index.html", name=name)
 
 @app.route("/<username>")
-def home(username):
-    name = username
+def user(username):
     return render_template("index.html", name=username)
 
 
