@@ -83,7 +83,20 @@ def register():
 @app.route("/logout")
 def loglogoutoff():
     session.clear()
-    return redirect("/")
+    return redirect("/login")
+
+@app.route("/delete_account")
+def delete_account():
+    if not session:
+        return redirect("/login")
+    query = ("DELETE FROM profiles WHERE profile_id = '{}'".format(session["id"]))
+    conect(query)
+    session.clear()
+    return redirect("/login")
+
+@app.route("/account")
+def account():
+    return render_template("account.html", user=session['name'])
 
 # @app.route("/cli/<comand>", methods=['GET'])
 # def add_comand(comand):

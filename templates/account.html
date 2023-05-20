@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+
+    <div class="d-flex flex-column position-relative mt-6 justify-content-center align-items-center">
+        <h2>Account</h2>
+        <span>{{ user }}</span>
+        <form action="/delete_account">
+            <button class="btn btn-secondary" type="submit">Delete Account</button>
+        </form>
+    </div>
+{% endblock %}
