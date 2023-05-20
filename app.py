@@ -1,9 +1,14 @@
 from flask import Flask, render_template, redirect, request, session
+from flask_session import Session
 import mysql.connector
 from datetime import datetime
 import os
 
 app = Flask(__name__)
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 def create_db_connection():
     connection = mysql.connector.connect(
@@ -28,24 +33,33 @@ def conect(query):
 
 
 @app.route("/")
-def call():
-    responde = conect("SELECT * FROM users")
-    return render_template("index.html", users=responde)
+def home():
+    return render_template("index.html")
 
-@app.route("/user/<username>", methods=['GET'])
-def add_user(username):
-    query = ("INSERT INTO users(user_name) VALUES ('{}')".format(username))
-    conect(query)
-    return redirect("/")
 
-@app.route("/cli/<comand>", methods=['GET'])
-def add_comand(comand):
-    query = ("{}".format(comand))
-    conect(query)
-    return redirect("/")
+@app.route("/login", methods=['GET', "POST"])
+def login():
+    if session:
+        return redirect("/")
+    session.clear()
+    msg = ''
+    if request.method == "POST":
+        name = request.form.get("name")
+        password = request.form.get("password")
+        query = ("SELECT * FROM profiles WHERE profile_name = '{}' AND profile_hash = '{}'".format(name, password))
+        result = conect(query)
+        if result:
+            session["name"] = name
+            session["id"] = result[0][0]
+            return redirect("/")
+        else:
+            return render_template("login.html", msg="Invalid user or password")
+    return render_template("login.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if session:
+        return redirect("/")
     msg = ''
     if request.method == "POST":
         # todays date
@@ -63,10 +77,20 @@ def register():
         # insert new profile to the database
         query = ("INSERT INTO profiles(profile_name, profile_hash, profile_signin) VALUES ('{}','{}','{}')".format(name, password, date))
         conect(query)
-        profiles = conect("SELECT * FROM profiles")
-        return render_template("index.html", users = profiles)
+        return render_template("index.html")
     return render_template("register.html")
 
+@app.route("/logout")
+def loglogoutoff():
+    session.clear()
+    return redirect("/")
+
+# @app.route("/cli/<comand>", methods=['GET'])
+# def add_comand(comand):
+#     query = ("{}".format(comand))
+#     conect(query)
+#     return redirect("/")
+
 if __name__ == "__main__":
-    app.run()
+    app.run() 
 

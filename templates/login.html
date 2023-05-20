@@ -4,8 +4,8 @@
 {% block main %}
 
     <div class="d-flex flex-column position-relative mt-6 justify-content-center align-items-center">
-        <h2>Register</h2>
-        <form class="d-flex flex-column justify-content-center align-items-center" action="/register" method="post">
+        <h2>Login</h2>
+        <form class="d-flex flex-column justify-content-center align-items-center" action="/login" method="post">
             <div class="mb-3">
                 <input required autocomplete="off" autofocus id="name" name="name" placeholder="Name" type="text">
             </div>
@@ -13,12 +13,7 @@
             <div class="mb-3">
                 <input required autocomplete="off" autofocus id="password" name="password" placeholder="Password" type="password">
             </div>
-    
-            <div class="mb-3">
-                <input required autocomplete="off" autofocus id="confirmation" name="confirmation" placeholder="Confirmation" type="password">
-            </div>
-    
-            <button class="btn btn-secondary" type="submit">Register</button>
+            <button class="btn btn-secondary" type="submit">Login</button>
         </form>
         {{ msg }}
     </div>

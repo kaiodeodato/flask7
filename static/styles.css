@@ -1,6 +1,22 @@
 body{
-    background-color: black !important;
+    background-color: rgb(3, 0, 23) !important;
     color: white !important;
+}
+.navbar1 a{
+    text-decoration: none !important;
+    color: white !important;
+}
+.navbar1 a:hover{
+    color: rgb(167, 167, 167) !important;
+}
+.nav_menu a{
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: rgba(79, 79, 79, 0.31);    
+}
+.nav_menu a:hover{
+    background-color: rgba(79, 79, 79, 0.541);    
 }
 .mt-6 {
     margin-top: 32vh;

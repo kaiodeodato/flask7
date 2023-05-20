@@ -14,6 +14,30 @@
     <title>Document</title>
 </head>
 <body>
+    <nav>
+        <div class="container navbar1">
+            <div class="d-flex flex-row justify-content-between align-items-center">
+                <div class="nav_logo">
+                    <a href="/" class="logo">
+                        <h2>Logo</h2>
+                    </a>
+                </div>
+                <div class="d-flex flex-row nav_menu">
+
+
+                    <a href="/">Home</a>
+                    {% if session %}
+                        <a href="/logout">Logout</a>
+                    {% else %}
+                        <a href="/login">Login</a>
+                        <a href="/register">Register</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
    <div class="d-flex flex-column position-relative justify-content-center align-items-center">
     <main>
         {% block main %}{% endblock %}
