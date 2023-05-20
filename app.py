@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect,request
+from flask import Flask, render_template, redirect, request, session
 import mysql.connector
+from datetime import datetime
 import os
 
 app = Flask(__name__)
@@ -14,6 +15,8 @@ def create_db_connection():
     )
     return connection
 
+# datetime_value = datetime(1990, 0, 0, 0, 0, 0).strftime('%Y-%m-%d %H:%M:%S')
+# print(datetime_value)
 
 def conect(query):
     connection = create_db_connection()
@@ -43,6 +46,20 @@ def add_comand(comand):
     conect(query)
     return redirect("/")
 
-   
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        name = request.form.get("name")
+        password = request.form.get("password")
+        query = ("INSERT INTO profiles(profile_name, profile_hash, profile_signin) VALUES ('{}','{}','{}')".format(name, password, date))
+        conect(query)
+        profiles = conect("SELECT * FROM profiles")
+        return render_template("index.html", users = profiles)
+    return render_template("register.html")
+
 if __name__ == "__main__":
     app.run()
+
+
+# INSERT INTO profiles(profile_name, profile_hash, profile_signin) VALUES ('kaio','senha','1900-01-01 00:00:00')

@@ -1,4 +1,7 @@
 body{
-    background-color: black;
-    color: white;
+    background-color: black !important;
+    color: white !important;
 }
+.mt-6 {
+    margin-top: 32vh;
+  }
