@@ -1,16 +1,21 @@
 from flask import Flask, render_template, redirect
 import mysql.connector
-from key import my_key
+from dotenv import load_dotenv
+import os
+
+def configure():
+    load_dotenv()
 
 app = Flask(__name__)
 
 def create_db_connection():
+    
     connection = mysql.connector.connect(
         host='162.241.2.19',
         port='3306',
         database='kaiode77_memory',
         user='kaiode77_criptografado',
-        password=my_key
+        password=os.getenv('my_key')
     )
     return connection
 
