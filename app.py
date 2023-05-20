@@ -1,10 +1,6 @@
 from flask import Flask, render_template, redirect
 import mysql.connector
-from dotenv import load_dotenv
 import os
-
-def configure():
-    load_dotenv()
 
 app = Flask(__name__)
 
@@ -15,7 +11,7 @@ def create_db_connection():
         port='3306',
         database='kaiode77_memory',
         user='kaiode77_criptografado',
-        password=os.getenv('my_key')
+        password=os.getenv(chave)
     )
     return connection
 
