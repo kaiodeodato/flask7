@@ -7,18 +7,19 @@
         <h2>Register</h2>
         <form class="d-flex flex-column justify-content-center align-items-center" action="/register" method="post">
             <div class="mb-3">
-                <input autocomplete="off" autofocus id="name" name="name" placeholder="Name" type="text">
+                <input required autocomplete="off" autofocus id="name" name="name" placeholder="Name" type="text">
             </div>
     
             <div class="mb-3">
-                <input autocomplete="off" autofocus id="password" name="password" placeholder="Password" type="password">
+                <input required autocomplete="off" autofocus id="password" name="password" placeholder="Password" type="password">
             </div>
     
             <div class="mb-3">
-                <input autocomplete="off" autofocus id="confirmation" name="confirmation" placeholder="Confirmation" type="password">
+                <input required autocomplete="off" autofocus id="confirmation" name="confirmation" placeholder="Confirmation" type="password">
             </div>
     
             <button class="btn btn-primary" type="submit">Register</button>
         </form>
+        {{ msg }}
     </div>
 {% endblock %}

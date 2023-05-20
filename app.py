@@ -15,8 +15,6 @@ def create_db_connection():
     )
     return connection
 
-# datetime_value = datetime(1990, 0, 0, 0, 0, 0).strftime('%Y-%m-%d %H:%M:%S')
-# print(datetime_value)
 
 def conect(query):
     connection = create_db_connection()
@@ -48,10 +46,21 @@ def add_comand(comand):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    msg = ''
     if request.method == "POST":
+        # todays date
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # inputs user
         name = request.form.get("name")
         password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+        # if one input is empty
+        if name == '' or password == '' or confirmation == '':
+            return render_template("register.html", msg="all inputs are required")
+        # check if the password checks
+        if not password == confirmation:
+            return render_template("register.html", msg="passwords not equal")
+        # insert new profile to the database
         query = ("INSERT INTO profiles(profile_name, profile_hash, profile_signin) VALUES ('{}','{}','{}')".format(name, password, date))
         conect(query)
         profiles = conect("SELECT * FROM profiles")
@@ -61,5 +70,3 @@ def register():
 if __name__ == "__main__":
     app.run()
 
-
-# INSERT INTO profiles(profile_name, profile_hash, profile_signin) VALUES ('kaio','senha','1900-01-01 00:00:00')
