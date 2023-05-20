@@ -11,7 +11,7 @@ def create_db_connection():
         port='3306',
         database='kaiode77_memory',
         user='kaiode77_criptografado',
-        password=os.getenv(chave)
+        password=os.getenv('chave')
     )
     return connection
 
