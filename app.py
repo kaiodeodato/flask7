@@ -1,15 +1,50 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
+import mysql.connector
+from key import my_key
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    name = 'kaio'
-    return render_template("index.html", name=name)
+def create_db_connection():
+    connection = mysql.connector.connect(
+        host='162.241.2.19',
+        port='3306',
+        database='kaiode77_memory',
+        user='kaiode77_criptografado',
+        password=my_key
+    )
+    return connection
 
-@app.route("/<username>")
-def user(username):
-    return render_template("index.html", name=username)
+@app.route("/")
+def call():
+    connection = create_db_connection()
+    cursor = connection.cursor()
+    query = "SELECT * FROM users"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return render_template("index.html", users=result)
+
+@app.route("/user/<username>", methods=['POST','GET'])
+def add_user(username):
+    connection = create_db_connection()
+    cursor = connection.cursor()
+    query = "INSERT INTO users(user_name) VALUES (%s)"
+    cursor.execute(query, (username,))
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return redirect("/")
+
+
+# @app.route("/")
+# def home():
+#     name = 'kaio'
+#     return render_template("index.html", name=name)
+
+# @app.route("/<username>")
+# def user(username):
+#     return render_template("index.html", name=username)
 
 
 if __name__ == "__main__":

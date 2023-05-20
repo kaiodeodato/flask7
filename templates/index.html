@@ -12,10 +12,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>This is a webserver</h1>
-    <h2>
-        hello, {{ name }}
-    </h2>
+    <div>
+        <h2>list of users</h2>
+        <ul>
+            {% for user in users %}
+                <li>{{ user[1] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     <script src= "{{ url_for('static',filename='script.js') }}"></script>
 </body>
 </html>
