@@ -2,7 +2,10 @@ from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
 import mysql.connector
 from datetime import datetime
+import pandas as pd
 import os
+
+data = pd.read_csv('books.csv')
 
 app = Flask(__name__)
 
@@ -20,7 +23,6 @@ def create_db_connection():
     )
     return connection
 
-
 def conect(query):
     connection = create_db_connection()
     cursor = connection.cursor()
@@ -31,11 +33,9 @@ def conect(query):
     connection.close()
     return result
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
-
 
 @app.route("/login", methods=['GET', "POST"])
 def login():
@@ -98,12 +98,24 @@ def delete_account():
 def account():
     return render_template("account.html", user=session['name'])
 
+
+@app.route("/books", methods=["GET"])
+def books():
+    page = request.args.get("page", 1, type=int)
+    offset = (page - 1) * 98  # Calculate the offset for the current page
+    query = f"SELECT * FROM books LIMIT 98 OFFSET {offset}"
+    books = conect(query)
+
+    return render_template("books.html", books=books, page=page)
+
+
 # @app.route("/cli/<comand>", methods=['GET'])
 # def add_comand(comand):
 #     query = ("{}".format(comand))
 #     conect(query)
 #     return redirect("/")
 
+
 if __name__ == "__main__":
-    app.run() 
+    app.run()
 

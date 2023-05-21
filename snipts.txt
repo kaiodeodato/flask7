@@ -1,0 +1,30 @@
+# Create the database connection
+# connection = create_db_connection()
+
+
+# # Iterate over the rows of the DataFrame and insert data into the "books" table
+# for index, row in data.iterrows():
+#     query = "INSERT INTO books (isbn13, isbn10, title, subtitle, authors, categories, thumbnail, description, published_year, average_rating, num_pages, ratings_count) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+#     values = (
+#         str(row['isbn13']) if not pd.isnull(row['isbn13']) else None,
+#         str(row['isbn10']) if not pd.isnull(row['isbn10']) else None,
+#         str(row['title']) if not pd.isnull(row['title']) else None,
+#         str(row['subtitle']) if not pd.isnull(row['subtitle']) else None,
+#         str(row['authors']) if not pd.isnull(row['authors']) else None,
+#         str(row['categories']) if not pd.isnull(row['categories']) else None,
+#         str(row['thumbnail']) if not pd.isnull(row['thumbnail']) else None,
+#         str(row['description']) if not pd.isnull(row['description']) else None,
+#         int(row['published_year']) if not pd.isnull(row['published_year']) else None,
+#         float(row['average_rating']) if not pd.isnull(row['average_rating']) else None,
+#         int(row['num_pages']) if not pd.isnull(row['num_pages']) else None,
+#         int(row['ratings_count']) if not pd.isnull(row['ratings_count']) else None,
+#     )
+
+#     # Execute the query
+#     cursor = connection.cursor()
+#     cursor.execute(query, values)
+#     connection.commit()
+#     cursor.close()
+
+# # Close the database connection
+# connection.close()
